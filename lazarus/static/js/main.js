@@ -47,6 +47,16 @@ function getCookie(name) {
     return cookieValue
 }
 
+function sendMessage() {
+    chatSocket.send(JSON.stringify({
+        'type': 'message',
+        'message': chatInputElement.value,
+        'name': chatName
+    }))
+
+    chatInputElement.value = ''
+    
+}
 
 async function joinChatRoom() {
     console.log('joinChatRoom')
@@ -90,22 +100,6 @@ async function joinChatRoom() {
     }
 }
 
-async function sendMessage() {
-    if (chatSocket) {
-        console.log("WebSocket State:", chatSocket.readyState);
-        if (chatSocket.readyState === WebSocket.OPEN) {
-            chatSocket.send(JSON.stringify({
-                'type': 'message',
-                'message': chatInputElement.value,
-                'name': chatName
-            }));
-        } else {
-            console.error("WebSocket is not in OPEN state!");
-        }
-    } else {
-        console.error("WebSocket not initialized!");
-    }
-}
 
 /**
  * Event Listener
