@@ -74,7 +74,7 @@ async function joinChatRoom() {
         console.log('data', data)
     })
 
-    const chatSocket = new WebSocket(`ws://localhost:8080/ws/chat/${chatUuid}/`);
+    chatSocket = new WebSocket(`ws://localhost:8080/ws/chat/${chatUuid}/`);
 
     chatSocket.onmessage = function(e) {
         console.log('onMessage')
@@ -92,17 +92,18 @@ async function joinChatRoom() {
 
 async function sendMessage() {
     if (chatSocket) {
-        if (chatSocket.readyState !== WebSocket.OPEN) {
-            // Wait for connection to open
-            await new Promise(resolve => chatSocket.onopen = resolve);
+        console.log("WebSocket State:", chatSocket.readyState);
+        if (chatSocket.readyState === WebSocket.OPEN) {
+            chatSocket.send(JSON.stringify({
+                'type': 'message',
+                'message': chatInputElement.value,
+                'name': chatName
+            }));
+        } else {
+            console.error("WebSocket is not in OPEN state!");
         }
-        chatSocket.send(JSON.stringify({
-            'type': 'message',
-            'message': chatInputElement.value,
-            'name': chatName
-        }));
     } else {
-        console.error("WebSocket not connected!");
+        console.error("WebSocket not initialized!");
     }
 }
 
