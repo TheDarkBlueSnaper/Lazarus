@@ -47,6 +47,7 @@ function getCookie(name) {
     return cookieValue
 }
 
+
 async function joinChatRoom() {
     console.log('joinChatRoom')
 
@@ -59,7 +60,7 @@ async function joinChatRoom() {
     data.append('name', chatName)
     data.append('url', chatWindowUrl)
 
-    await fetch('api/create-room/${chatUuid}/', {
+    await fetch(`api/create-room/${chatUuid}/`, {
         method: 'POST',
         headers: {
             'X-CSRFToken': getCookie('csrftoken')
@@ -73,10 +74,11 @@ async function joinChatRoom() {
         console.log('data', data)
     })
 
-    const chatSocket = new WebSocket(`ws://${window.location.host}/ws/chat/${chatUuid}/`);
+    const chatSocket = new WebSocket(`ws://localhost:8080/ws/chat/${chatUuid}/`);
 
     chatSocket.onmessage = function(e) {
         console.log('onMessage')
+        // Handle incoming messages from the server
     }
 
     chatSocket.onopen = function(e) {
@@ -85,6 +87,22 @@ async function joinChatRoom() {
 
     chatSocket.onclose = function(e) {
         console.log('onClose - chat socket closed')
+    }
+}
+
+async function sendMessage() {
+    if (chatSocket) {
+        if (chatSocket.readyState !== WebSocket.OPEN) {
+            // Wait for connection to open
+            await new Promise(resolve => chatSocket.onopen = resolve);
+        }
+        chatSocket.send(JSON.stringify({
+            'type': 'message',
+            'message': chatInputElement.value,
+            'name': chatName
+        }));
+    } else {
+        console.error("WebSocket not connected!");
     }
 }
 
@@ -108,6 +126,14 @@ chatJoinElement.onclick = function(e) {
     chatRoomElement.classList.remove('hidden')
 
     joinChatRoom()
+
+    return false
+}
+
+chatSendElement.onclick = function(e) {
+    e.preventDefault()
+
+    sendMessage()
 
     return false
 };
