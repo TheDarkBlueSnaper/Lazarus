@@ -11,6 +11,7 @@ let chatSocket = null
  * Elements
  */
 
+
 const chatLogElement = document.querySelector('#chat_log')
 const chatInputElement = document.querySelector('#chat_message_input')
 const chatSendElement = document.querySelector('#chat_message_send')
@@ -19,6 +20,12 @@ const chatSendElement = document.querySelector('#chat_message_send')
 /**
  * Functions
  */
+
+
+function scrollToBottom() {
+    chatLogElement.scrollTop = chatLogElement.scrollHeight
+}
+
 
 function sendMessage() {
     chatSocket.send(JSON.stringify({
@@ -31,6 +38,7 @@ function sendMessage() {
     chatInputElement.value = ''
     
 }
+
 
 function onChatMessage(data) {
     console.log('onChatMessage', data)
@@ -66,7 +74,10 @@ function onChatMessage(data) {
             `
         }
     }
+
+    scrollToBottom()
 }
+
 
 /**
  * Websocket
@@ -82,6 +93,8 @@ chatSocket.onmessage = function(e) {
 
 chatSocket.onopen = function(e) {
     console.log('Socket open')
+
+    scrollToBottom()
 }
 
 chatSocket.onclose = function(e) {
@@ -98,4 +111,11 @@ chatSendElement.onclick = function(e) {
     sendMessage()
 
     return false
-};
+}
+
+
+chatInputElement.onkeyup = function(e) {
+    if (e.keyCode == 13) {
+        sendMessage()
+    }
+}

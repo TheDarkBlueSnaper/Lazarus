@@ -10,7 +10,7 @@
                 <b>Agent: </b> {% firstof room.agent.name 'None yet..'%}<br>
             </p>
 
-            <a href="{% url 'chat:room' room.uuid %}" class="inline-block px-6 py-2 mt-4 text-white bg-emerald-800 rounded-xl">Join</a>
+            <a href="{% url 'chat:room' room.uuid %}" class="inline-block px-6 py-2 mt-4 text-black bg-amber-800 rounded-xl">Join</a>
         </div>
     {% endfor %}
 </div>

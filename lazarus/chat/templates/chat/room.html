@@ -17,25 +17,25 @@
 
     <hr class="mb-6">
 
-    <div id="chat_log" class="md-4 p-4 bg-gray-100 rounded-xl h-[300px] overflow-scroll flex flex-col flex-grow">
+    <div id="chat_log" class="md-4 p-4 bg-amber-200 rounded-xl h-[300px] overflow-scroll flex flex-col flex-grow">
         {% for message in room.messages.all %}
             <div class="flex w-full max-w-md mt-2 space-x-3 {% if message.created_by %}ml-auto justify-end{% endif %}">
                 {% if not message.created_by %}
-                    <div class="flex-shrink-0 w-10 h-10 pt-2 text-center bg-gray-200 rounded-full">
+                    <div class="flex-shrink-0 w-10 h-10 pt-2 text-center rounded-full bg-amber-300">
                         {{ message.sent_by|initials }}
                     </div>
                 {% endif %}
 
                 <div>
-                    <div class="{% if message.created_by %}bg-blue-600 text-white{% else %}bg-gray-300{% endif %} p-3 rounded-xl">
+                    <div class="{% if message.created_by %}bg-amber-800 text-black{% else %}bg-amber-200{% endif %} p-3 rounded-xl">
                         <p class="text-sm">{{ message.body }}</p>
                     </div>
 
-                    <span class="text-sm leading-none text-gray-500">{{ message.created_at|timesince }} ago</span>
+                    <span class="text-sm leading-none text-gray-700">{{ message.created_at|timesince }} ago</span>
                 </div>
 
                 {% if message.created_by %}
-                    <div class="flex-shrink-0 w-10 h-10 pt-2 text-center bg-gray-200 rounded-full">
+                    <div class="flex-shrink-0 w-10 h-10 pt-2 text-center rounded-full bg-amber-200">
                         {{ message.sent_by|initials }}
                     </div>
                 {% endif %}
@@ -44,8 +44,8 @@
     </div>
 
     {% if room.status == 'active'%}
-        <input type="text" name="message" id="chat_message_input" class="w-full p-4 mb-4 bg-emerald-100 border-emerald-100 rounded-xl" placeholder="Type your message...">
-        <button id="chat_message_send" class="w-full px-6 py-2 text-white bg-emerald-500 rounded-xl">Send</button>
+        <input type="text" name="message" id="chat_message_input" class="w-full p-4 mb-4 bg-amber-100 border-amber-400 rounded-xl" placeholder="Type your message...">
+        <button id="chat_message_send" class="w-full px-6 py-2 text-black bg-amber-600 rounded-xl">Send</button>
     {% endif %}
 {% endblock %}
 
