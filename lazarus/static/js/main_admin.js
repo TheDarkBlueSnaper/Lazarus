@@ -20,6 +20,18 @@ const chatSendElement = document.querySelector('#chat_message_send')
  * Functions
  */
 
+function sendMessage() {
+    chatSocket.send(JSON.stringify({
+        'type': 'message',
+        'message': chatInputElement.value,
+        'name': document.querySelector('#user_name').textContent.replaceAll('"', ''),
+        'agent': document.querySelector('#user_id').textContent.replaceAll('"', ''),
+    }))
+
+    chatInputElement.value = ''
+    
+}
+
 function onChatMessage(data) {
     console.log('onChatMessage', data)
 
@@ -75,3 +87,15 @@ chatSocket.onopen = function(e) {
 chatSocket.onclose = function(e) {
     console.log('Socket closed unexpectedly')
 }
+
+/**
+ * Event listeners
+ */
+
+chatSendElement.onclick = function(e) {
+    e.preventDefault()
+
+    sendMessage()
+
+    return false
+};
