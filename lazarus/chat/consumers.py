@@ -13,16 +13,22 @@ from .templatetags.chatextras import initials
 class ChatConsumer(AsyncWebsocketConsumer):
     async def connect(self):
         self.room_name = self.scope['url_route']['kwargs']['room_name']
-        self.room_group_name = 'chat_%s' % self.room_name
+        self.room_group_name = f'chat_{self.room_name}'
         self.user = self.scope['user']
 
         # Join room group
         await self.get_room()
-        await self.channel_layer.group_add(
-            self.room_group_name,
-            self.channel_name
-        )
+        await self.channel_layer.group_add(self.room_group_name, self.channel_name)
         await self.accept()
+
+        # Inform user
+        if self.user.is_staff:
+            await self.channel_layer.group_send(
+                self.room_group_name,
+                {
+                    'type': 'users_update'
+                }
+            )
         
 
     async def disconnect(self, close_code):
@@ -72,6 +78,12 @@ class ChatConsumer(AsyncWebsocketConsumer):
             'agent': event['agent'],
             'initials': event['initials'],
             'created_at': event['created_at'],
+        }))
+
+    async def users_update(self, event):
+        # Send information to the web socket (front end)
+        await self.send(text_data=json.dumps({
+            'type': 'users_update'
         }))
     
 

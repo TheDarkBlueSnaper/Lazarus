@@ -96,8 +96,15 @@ function onChatMessage(data) {
                 </div>
             `
         }
+    } else if (data.type == 'users_update') {
+        chatLogElement.innerHTML += `
+            <div class="flex w-full mt-2 space-x-3 max-w-md">
+                <div class="bg-amber-400 p-3 rounded-lg">
+                    <p class="text-sm">${data.message}</p>
+                </div>
+            </div>
+        `
     }
-
     scrollToBottom()
 }
 
