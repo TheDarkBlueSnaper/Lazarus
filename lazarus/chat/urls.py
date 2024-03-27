@@ -9,5 +9,6 @@ urlpatterns = [
     path('api/create-room/<str:uuid>/', views.create_room, name='create-room'),
     path('chat-admin/', views.admin, name='admin'),
     path('chat-admin/add-user/', views.add_user, name='add_user'),
+    path('chat-admin/user-detail/<uuid:uuid>/', views.user_detail, name='user-detail'),
     path('chat-room/<str:uuid>/', views.room, name='room'),
 ]
