@@ -6,5 +6,7 @@ app_name = 'chat'
 
 
 urlpatterns = [
-    path('api/create-room/<str:uuid>/', views.create_room, name='create-room')
+    path('api/create-room/<str:uuid>/', views.create_room, name='create-room'),
+    path('chat-admin/', views.admin, name='admin'),
+    path('chat-room/<str:uuid>/', views.room, name='room'),
 ]
