@@ -7,7 +7,7 @@
         <div class="mt-8">
             <h2 class="mb-4 text-lg">Users</h2>
 
-            <a href="#" class="inline-block px-6 py-2 text-black bg-amber-600 rounded-xl">Add User</a>
+            <a href="{% url 'chat:add_user' %}" class="inline-block px-6 py-2 text-black bg-amber-600 rounded-xl">Add User</a>
 
             <div class="mt-6">
                 {% for user in users%}
