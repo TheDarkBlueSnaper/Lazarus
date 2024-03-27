@@ -77,7 +77,7 @@ function onChatMessage(data) {
                             <p class="text-sm">${data.message}</p>
                         </div>
                         
-                        <span class="text-xs text-amber-500 leading-none">${data.created_at} ago</span>
+                        <span class="text-xs text-gray-500 leading-none">${data.created_at} ago</span>
                     </div>
                 </div>
             `
