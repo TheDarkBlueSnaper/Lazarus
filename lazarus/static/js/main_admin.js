@@ -83,7 +83,7 @@ function onChatMessage(data) {
  * Websocket
 */
 
-chatSocket = new WebSocket(`ws://localhost:8080/ws/chat/${chatRoom}/`);
+chatSocket = new WebSocket(`ws://${window.location.host}/ws/${chatRoom}/`)
 
 chatSocket.onmessage = function(e) {
     console.log('onMessage');
