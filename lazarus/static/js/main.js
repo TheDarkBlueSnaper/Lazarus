@@ -102,6 +102,7 @@ function onChatMessage(data) {
             `
         } 
     } else if (data.type == 'users_update') {
+        print('users_update json', data)
         chatLogElement.innerHTML += '<p class="mt-2">The admin/agent has joined the chat!'
     }
      else if (data.type == 'writing_active') {

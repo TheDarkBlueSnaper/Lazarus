@@ -23,6 +23,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
         # Inform user about staff joining (if staff user)
         if self.user.is_staff:
+            print(self.user)
             await self.channel_layer.group_send(
                 self.room_group_name,
                 {
@@ -89,6 +90,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
             'name': event['name'],
             'agent': event['agent'],
             'initials': event['initials'],
+            'created_at': event['created_at'],
         }))
     
     async def writing_active(self, event):
@@ -103,6 +105,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
     async def users_update(self, event):
         # Send information to the web socket (front end)
+        print(f' def fuc back end {self.user}')
         await self.send(text_data=json.dumps({
             'type': 'users_update'
         }))
