@@ -50,7 +50,7 @@ function onChatMessage(data) {
                     <div class="flex-shrink-0 h-10 w-10 rounded-full bg-amber-500 text-center pt-2">${data.initials}</div>
 
                     <div>
-                        <div class="bg-amber-400 p-3 rounded-l-lg rounded-br-lg">
+                        <div class="bg-amber-400 p-3 rounded-r-lg rounded-tl-lg">
                             <p class="text-sm">${data.message}</p>
                         </div>
                         
@@ -62,7 +62,7 @@ function onChatMessage(data) {
             chatLogElement.innerHTML += `
                 <div class="flex w-full mt-2 space-x-3 max-w-md ml-auto justify-end">
                     <div>
-                        <div class="bg-slate-400 p-3 rounded-l-lg rounded-br-lg">
+                        <div class="bg-slate-400 p-3 rounded-l-lg rounded-tr-lg">
                             <p class="text-sm">${data.message}</p>
                         </div>
                         
