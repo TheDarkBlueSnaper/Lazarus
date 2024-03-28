@@ -89,17 +89,17 @@ chatSocket.onmessage = function(e) {
     console.log('onMessage');
     
     onChatMessage(JSON.parse(e.data));
-};
+}
 
 chatSocket.onopen = function(e) {
     console.log('Socket open');
 
     scrollToBottom();
-};
+}
 
 chatSocket.onclose = function(e) {
     console.log('Socket closed unexpectedly');
-};
+}
 
 /**
  * Event listeners
@@ -111,11 +111,21 @@ chatSendElement.onclick = function(e) {
     sendMessage();
 
     return false;
-};
+}
 
 
 chatInputElement.onkeyup = function(e) {
     if (e.keyCode == 13) {
         sendMessage();
     }
-};
+}
+
+
+chatInputElement.onfocus = function(e) {
+    chatSocket.send(JSON.stringify({
+        'type': 'update',
+        'message': 'writing_active',
+        'name': document.querySelector('#user_name').textContent.replaceAll('"', ''),
+        'agent': document.querySelector('#user_id').textContent.replaceAll('"', ''),
+    }));
+}
