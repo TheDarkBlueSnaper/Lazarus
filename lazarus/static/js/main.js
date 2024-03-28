@@ -75,10 +75,10 @@ function onChatMessage(data) {
         if (data.agent) {
             chatLogElement.innerHTML += `
                 <div class="flex w-full mt-2 space-x-3 max-w-md">
-                    <div class="flex-shrink-0 h-10 w-10 rounded-full bg-amber-700 text-center pt-2">${data.initials}</div>
+                    <div class="flex-shrink-0 h-10 w-10 rounded-full bg-slate-500 text-center pt-2">${data.initials}</div>
 
                     <div>
-                        <div class="bg-amber-400 p-3 rounded-l-lg rounded-br-lg">
+                        <div class="bg-slate-400 p-3 rounded-l-lg rounded-br-lg">
                             <p class="text-sm">${data.message}</p>
                         </div>
                         
@@ -97,15 +97,13 @@ function onChatMessage(data) {
                         <span class="text-xs text-gray-500 leading-none">${data.created_at} ago</span>
                     </div>
 
-                    <div class="flex-shrink-0 h-10 w-10 rounded-full bg-gray-300 text-center pt-2">${data.initials}</div>
+                    <div class="flex-shrink-0 h-10 w-10 rounded-full bg-amber-500 text-center pt-2">${data.initials}</div>
                 </div>
             `
-        } 
+        }
     } else if (data.type == 'users_update') {
-        print('users_update json', data)
         chatLogElement.innerHTML += '<p class="mt-2">The admin/agent has joined the chat!'
-    }
-     else if (data.type == 'writing_active') {
+    } else if (data.type == 'writing_active') {
         if (data.agent) {
             let tmpInfo = document.querySelector('.tmp-info')
 
@@ -115,10 +113,10 @@ function onChatMessage(data) {
 
             chatLogElement.innerHTML += `
                 <div class="tmp-info flex w-full mt-2 space-x-3 max-w-md">
-                    <div class="flex-shrink-0 h-10 w-10 rounded-full bg-gray-300 text-center pt-2">${data.initials}</div>
+                    <div class="flex-shrink-0 h-10 w-10 rounded-full bg-slate-500 text-center pt-2">${data.initials}</div>
 
                     <div>
-                        <div class="bg-gray-300 p-3 rounded-l-lg rounded-br-lg">
+                        <div class="bg-slate-300 p-3 rounded-l-lg rounded-br-lg">
                             <p class="text-sm">The agent/admin is writing a message</p>
                         </div>
                     </div>
@@ -214,4 +212,12 @@ chatInputElement.onkeyup = function(e) {
     if (e.keyCode === 13) {
         sendMessage()
     }
+}
+
+chatInputElement.onfocus = function(e) {
+    chatSocket.send(JSON.stringify({
+        'type': 'update',
+        'message': 'writing_active',
+        'name': chatName,
+    }));
 }
